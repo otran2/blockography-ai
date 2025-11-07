@@ -2,8 +2,8 @@
 *.pyc
 __pycache__/
 .vscode/
-eval/
-train/
+eval_data/
+train_data/
 ridge_predictions.csv
 xgboost_predictions.csv
 rf_predictions.csv

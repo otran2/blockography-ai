@@ -1,10 +1,21 @@
 # Blockography.AI
 
+![Logo](assets/logo.png)
+
 Welcome to ACM AI's Fall 2025 Competition, **Blockography.AI**! In this competition, you will train your models to classify Minecraft biomes from real gameplay images. Compete against your peers to win Qualcomm Rubik Pi 3's, and get a chance to network with Qualcomm engineers!
+
+## Competition Timeline
+
+- 10 am - 11 am: check-in
+- 12 pm or 1 pm: lunch
+- 5 pm: Submission ends
+- 5 pm - 6 pm Qualcomm social time
+- 6 pm: announce winners
 
 ## Table of Contents
 
 - [Overview](#blockographyai)
+- [Competition Timeline](#competition-timeline)
 - [Repo Structure](#repo-structure)
 - [Installation](#installation)
   - [Install Miniconda](#install-miniconda)
@@ -20,7 +31,10 @@ Welcome to ACM AI's Fall 2025 Competition, **Blockography.AI**! In this competit
 ```text
 BLOCKOGRAPHY-AI/
 │
-├── assets/                     # Images, reference files, or competition visuals
+├── assets/                     # logo
+│
+├── outputs/                    # Storing outputs for your models
+│   └── sample_submission.csv
 │
 ├── models/                     # Model training notebooks
 │   ├── rf.ipynb                # Random Forest baseline
@@ -30,7 +44,17 @@ BLOCKOGRAPHY-AI/
 ├── userkits/                   # Utility code and analysis tools
 │   ├── EDA.ipynb               # Exploratory Data Analysis notebook
 │   ├── features.py             # Feature extraction and transformation functions
-│   └── utils.py                # Helper functions for preprocessing and evaluation
+│   ├── utils.py                # Helper functions for preprocessing and evaluation
+│
+├── train_data/                 # Training data (download from Google Drive)
+│   ├── bamboo_jungle/          # Example biome folder containing several images
+│   │   ├── <file_name>.jpg     # Image files for training
+│   │   └── ...
+│   └── ...                     # Other biome folders with several images each
+│
+├── eval_data/                  # Evaluation data (download from Google Drive)
+│   ├── <file_name>.jpg         # Several image files for evaluation
+│   └── ...
 │
 ├── .gitignore                  # Files and directories to ignore in version control
 ├── environment.yml             # Conda environment setup file
@@ -79,6 +103,15 @@ conda install numpy
 
 After using VS Code to open the repository, open `rf.ipynb`, click "Select Kernel" on the top right. If your VS Code doesn't have Python and Jupyter extensions, click "Install/Enable suggested extensions." After the extensions are installed, click "Select Kernel" again, and choose "Python Environments" and then "ai-comp-dev" on the top command bar. After the kernel is set, run the first code block. If it runs successfully, you are good to go!
 
+### Download Data
+
+You need to download data from Google Drive here:
+
+- train_data: <https://drive.google.com/drive/folders/12ZZKnWFAvVhDVx37DvqizEtQ19LURluD?usp=drive_link>
+- eval_data: <https://drive.google.com/drive/folders/1UAuCqjCoODF6vPLM80FFADENi17nYzre?usp=drive_link>
+
+You then need to unzip the download zip file and extract it in the root of this directory (e.g. `/Users/<username>/blockography-ai` in MacOS). Make sure `train_data` and `eval_data` are stored in the root level or you'll have path issue when you run the notebooks.
+
 ## Instruction
 
 In this competition, we expect you to mainly work on finding meaningful features to improve the performance of your model. We have provided a list of possible features in (`userkits/features.py`), and you should look over these features and understand why they might be helpful to classify minecraft biomes. You are also welcome to design your custom features.
@@ -89,17 +122,18 @@ In addition, you are welcome to use other models including deep learning models 
 
 ## Submission and Evaluation
 
-We split the dataset into two: train data and eval data. For the train data, you are given the features and the true labels (in `\train`). For the eval data you are only given the features but no labels. You are supposed to train your model using the train data and submit the prediction of the eval data.
+We split the dataset into two: train data and eval data. For the train data, you are given the features and the true labels (in `\train_data`). For the eval data (in `\eval_data`) you are only given the features but no labels. You are supposed to train your model using the train data and submit the prediction of the eval data.
 
-To submit your prediction, run the final block (submission) in the starter notebooks. It will store the results of your prediction in the path specified (you can change this too). Next, go to <https://ai.acmucsd.com/portal> to manually upload the csv file. The submission portal will be closed at 6 pm.
+To submit your prediction, run the final block (submission) in the starter notebooks. It will store the results of your prediction in the path specified (you can change this too). Next, go to <https://ai.acmucsd.com/portal> to manually upload the csv file. The submission portal will be closed at 5 pm.
 
 On the website portal, you will see the public score of your submission, which is calculated using 50% of the test data. The final ranking will be based on the other 50% data (private score).
 
 ## Competition Rules
 
-1. You are welcome to use any model for this competition as long as you can explain the algorithm/logic of your solution.
-2. The use of LLM is allowed, but you have to make sure you review and test your code.
-3. If we detect any behavior that intends to cheat (hacking, exploiting the evaluaion server, etc.), we have the right to cancel your eligibility.
+1. You are welcome to use any model for this competition as long as you can explain the algorithm or logic behind your solution.
+2. Winners will be interviewed to discuss their approach and solution before prizes are awarded.
+3. The use of LLM is permitted, but participants are responsible for reviewing and testing all submitted code.
+4. Any attempt to cheat, including hacking, exploiting the evaluation server, or other dishonest behavior, will result in disqualification.
 
 ## FAQ
 
@@ -109,7 +143,7 @@ On the website portal, you will see the public score of your submission, which i
 
 **Q: What if I have questions related to the competition?**
 
-**A:** Go to our discord server [ACM AI @ UCSD](https://acmurl.com/ai-discord) and find the channel for \<name\>. You can also directly reach out to our staff, but we may not help you with your solution.
+**A:** Go to our discord server [ACM AI @ UCSD](https://acmurl.com/ai-discord) and find the channel for blockagraphy.ai/q-and-a. You can also directly reach out to our staff, but we may not help you with your solution.
 
 ## Resources
 

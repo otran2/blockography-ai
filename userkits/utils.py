@@ -1,16 +1,17 @@
 import os
 import cv2
+import tqdm
 import numpy as np
 import pandas as pd
 
-def load_train_data(data_dir='../train'):
+def load_train_data(data_dir='../train_data'):
     X = []
     y = []
-    for biome_name in os.listdir(data_dir):
+    for biome_name in tqdm.tqdm(os.listdir(data_dir), desc="Loading train data"):
         biome_path = os.path.join(data_dir, biome_name)
         if not os.path.isdir(biome_path):
             continue
-        for img_name in os.listdir(biome_path):
+        for img_name in tqdm.tqdm(os.listdir(biome_path), desc=f"Processing {biome_name}", leave=False):
             img_path = os.path.join(biome_path, img_name)
             img = cv2.imread(img_path)
             if img is None:
@@ -19,18 +20,20 @@ def load_train_data(data_dir='../train'):
             y.append(biome_name)
     return X, y
 
-def load_eval_data(data_dir='../eval'):
+def load_eval_data(data_dir='../eval_data'):
     X = []
-    for img_name in os.listdir(data_dir):
+    file_ids = []
+    for img_name in tqdm.tqdm(os.listdir(data_dir), desc="Loading eval data"):
         img_path = os.path.join(data_dir, img_name)
         img = cv2.imread(img_path)
         if img is None:
             continue
         X.append(img)
-    return X
-    
-def save_predictions(predictions, output_file='predictions.csv'):
-    df = pd.DataFrame({"id": np.arange(1, len(predictions) + 1), "prediction": predictions})
+        file_ids.append(img_name)
+    return X, file_ids
+
+def save_predictions(predictions, file_ids, output_file='predictions.csv'):
+    df = pd.DataFrame({"id": file_ids, "prediction": predictions})
     df.to_csv(output_file, index=False)
     print(f"Saved {output_file}")
     return
